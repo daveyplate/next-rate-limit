@@ -1,7 +1,7 @@
 {
-  "name": "@leakeddave/my-test-package",
-  "version": "1.0.1",
-  "description": "",
+  "name": "@daveyplate/next-rate-limit",
+  "version": "1.0.0",
+  "description": "NextJS Rate Limiting Middleware",
   "main": "src/index",
   "types": "src/@types/index",
   "files": [
@@ -11,10 +11,20 @@
     "build": "npx tsc",
     "prepublishOnly": "npm run build"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "NextJS",
+    "Rate Limit",
+    "Rate Limiting",
+    "Middleware"
+  ],
+  "author": "LeakedDave",
   "license": "ISC",
   "devDependencies": {
+    "@types/uuid": "^10.0.0",
     "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "next": "^14.2.14",
+    "uuid": "^10.0.0"
   }
 }
