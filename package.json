@@ -1,0 +1,20 @@
+{
+  "name": "@leakeddave/my-test-package",
+  "version": "1.0.1",
+  "description": "",
+  "main": "src/index",
+  "types": "src/@types/index",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "build": "npx tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.6.2"
+  }
+}

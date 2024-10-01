@@ -1,0 +1,14 @@
+{
+    "include": [
+        "src/**/*"
+    ],
+    "compilerOptions": {
+        "allowJs": true,
+        "declaration": true,
+        "emitDeclarationOnly": true,
+        "outDir": "src/@types",
+        "lib": [
+            "ES6"
+        ]
+    }
+}
