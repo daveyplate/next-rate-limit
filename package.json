@@ -1,5 +1,6 @@
 {
   "name": "@daveyplate/next-rate-limit",
+  "homepage": "https://github.com/Daveyplate/next-rate-limit",
   "version": "1.0.0",
   "description": "NextJS Rate Limiting Middleware",
   "main": "src/index",
