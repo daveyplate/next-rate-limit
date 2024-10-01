@@ -12,28 +12,27 @@ const rateLimitMap = new Map()
  * @returns {boolean} - Indicate if the rate limit is exceeded
  */
 export function handleRateLimiting(key, limit, windowMs) {
+    const currentTime = Date.now()
+
     if (!rateLimitMap.has(key)) {
-        rateLimitMap.set(key, {
-            count: 0,
-            lastReset: Date.now(),
-        })
+        rateLimitMap.set(key, [])
     }
 
-    const data = rateLimitMap.get(key)
+    const timestamps = rateLimitMap.get(key)
 
-    // Reset count if the window has expired
-    if (Date.now() - data.lastReset > windowMs) {
-        data.count = 0
-        data.lastReset = Date.now()
-    }
+    // Filter out timestamps that are outside the current window
+    const validTimestamps = timestamps.filter(timestamp => (currentTime - timestamp) < windowMs)
+
+    // Update the rate limit map with the valid timestamps
+    rateLimitMap.set(key, validTimestamps)
 
     // Check if limit exceeded
-    if (data.count >= limit) {
+    if (validTimestamps.length >= limit) {
         return true // Indicate limit exceeded
     }
 
-    // Increment count
-    data.count += 1
+    // Add the current timestamp to the list
+    validTimestamps.push(currentTime)
     return false // Indicate not exceeded
 }
 
@@ -72,4 +71,6 @@ export function rateLimit({ request, nextResponse, ipLimit = 300, sessionLimit =
             status: 429,
         })
     }
+
+    return nextResponse // Allow the request to continue
 }
