@@ -5,11 +5,11 @@ import { v4 as uuidv4 } from 'uuid'
 const rateLimitMap = new Map()
 
 /**
- * Function to handle rate limiting
- * @param {string} key - Key to identify the rate limit
- * @param {number} limit - Number of requests allowed in the window
- * @param {number} windowMs - Time window in milliseconds
- * @returns {boolean} - Indicate if the rate limit is exceeded
+ * Function to handle rate limiting.
+ * @param {string} key - Key to identify the rate limit.
+ * @param {number} limit - Number of requests allowed in the window.
+ * @param {number} windowMs - Time window in milliseconds.
+ * @returns {boolean} - Indicate if the rate limit is exceeded.
  */
 export function handleRateLimiting(key, limit, windowMs) {
     const currentTime = Date.now()
@@ -37,17 +37,16 @@ export function handleRateLimiting(key, limit, windowMs) {
 }
 
 /**
- * NextJS Rate Limiting Middleware
- * This middleware can be used to rate limit requests based
+ * This middleware is used to rate limit requests based
  * on IP address and session ID. Returns NextResponse with 
  * 429 status code if the rate limit is exceeded.
- * @param {object} options - Rate limiting options
- * @param {NextRequest} options.request - Incoming request object
- * @param {NextResponse} options.nextResponse - NextResponse object
- * @param {number} options.ipLimit - Number of requests allowed per IP in the window
- * @param {number} options.sessionLimit - Number of requests allowed per session in the window
- * @param {number} options.windowMs - Time window in milliseconds
- * @returns {NextResponse?} - Rate Limit response if exceeded
+ * @param {object} options - Rate limiting options.
+ * @param {NextRequest} options.request - Incoming request object.
+ * @param {NextResponse} options.nextResponse - NextResponse object.
+ * @param {number} [options.sessionLimit=30] - Number of requests allowed per session in the window.
+ * @param {number} [options.ipLimit=300] - Number of requests allowed per IP in the window.
+ * @param {number} [options.windowMs=10000] - Time window in milliseconds.
+ * @returns {NextResponse?} - Rate Limit response if exceeded.
  */
 export function rateLimit({
     request,
