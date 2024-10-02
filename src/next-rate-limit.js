@@ -28,12 +28,12 @@ export function handleRateLimiting(key, limit, windowMs) {
 
     // Check if limit exceeded
     if (validTimestamps.length >= limit) {
-        return true // Indicate limit exceeded
+        return true
     }
 
     // Add the current timestamp to the list
     validTimestamps.push(currentTime)
-    return false // Indicate not exceeded
+    return false
 }
 
 /**
@@ -49,7 +49,13 @@ export function handleRateLimiting(key, limit, windowMs) {
  * @param {number} options.windowMs - Time window in milliseconds
  * @returns {NextResponse?} - Rate Limit response if exceeded
  */
-export function rateLimit({ request, nextResponse, ipLimit = 300, sessionLimit = 30, windowMs = 10 * 1000 }) {
+export function rateLimit({
+    request,
+    nextResponse,
+    sessionLimit = 30,
+    ipLimit = 300,
+    windowMs = 10 * 1000
+}) {
     const ip = request.headers.get("x-forwarded-for") || request.ip
     let sessionId = cookies().get('session_id')?.value
 
@@ -72,5 +78,5 @@ export function rateLimit({ request, nextResponse, ipLimit = 300, sessionLimit =
         })
     }
 
-    return nextResponse // Allow the request to continue
+    return nextResponse
 }

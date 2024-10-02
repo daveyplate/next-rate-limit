@@ -1,6 +1,6 @@
 # NextJS Rate Limiting Middleware
 
-Uses in-memory rate limiting for both session & IP. More instructions WIP.
+Uses in-memory rate limiting for both session & IP. Doesn't require Redis, simple easy setup, and super basic protection from abuse.
 
 # Installation
 
@@ -10,11 +10,20 @@ npm install @daveyplate/next-rate-limit
 
 # Usage
 
+Default limits are 30 requests per session within 10 seconds, and 300 requests per IP within 10 seconds (10 users)
+
 ```
-export function rateLimit({ request, nextResponse, ipLimit = 300, sessionLimit = 30, windowMs = 15 * 1000 }) {
+export function rateLimit({ 
+    request, 
+    nextResponse, 
+    sessionLimit = 30, 
+    ipLimit = 300, 
+    windowMs = 10 * 1000 
+})
 ```
 
 middleware.js
+
 ```
 import { NextResponse } from 'next/server'
 import { rateLimit } from '@daveyplate/next-rate-limit'
