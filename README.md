@@ -4,7 +4,7 @@ Uses in-memory rate limiting for both session & IP. Doesn't require Redis, simpl
 
 # Installation
 
-```
+```bash
 npm install @daveyplate/next-rate-limit
 ```
 
@@ -12,7 +12,7 @@ npm install @daveyplate/next-rate-limit
 
 Default limits are 30 requests per session within 10 seconds, and 300 requests per IP within 10 seconds (10 users)
 
-```
+```jsx
 export function rateLimit({ 
     request, 
     nextResponse, 
@@ -24,7 +24,7 @@ export function rateLimit({
 
 middleware.js
 
-```
+```jsx
 import { NextResponse } from 'next/server'
 import { rateLimit } from '@daveyplate/next-rate-limit'
 
