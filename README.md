@@ -15,7 +15,7 @@ Default limits are 30 requests per session within 10 seconds, and 300 requests p
 ```jsx
 export function rateLimit({ 
     request, 
-    nextResponse, 
+    response, 
     sessionLimit = 30, 
     ipLimit = 300, 
     windowMs = 10 * 1000 
@@ -29,12 +29,12 @@ import { NextResponse } from 'next/server'
 import { rateLimit } from '@daveyplate/next-rate-limit'
 
 export function middleware(request) {
-    const nextResponse = NextResponse.next()
+    const response = NextResponse.next()
 
-    const rateLimitResponse = rateLimit({ request, nextResponse })
+    const rateLimitResponse = rateLimit({ request, response })
     if (rateLimitResponse) return rateLimitResponse
 
-    return nextResponse
+    return response
 }
 
 // Apply middleware to all API routes

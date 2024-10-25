@@ -42,7 +42,7 @@ export function handleRateLimiting(key, limit, windowMs) {
  * 429 status code if the rate limit is exceeded.
  * @param {object} options - Rate limiting options.
  * @param {NextRequest} options.request - Incoming request object.
- * @param {NextResponse} options.nextResponse - NextResponse object.
+ * @param {NextResponse} options.response - NextResponse object.
  * @param {number} [options.sessionLimit=30] - Number of requests allowed per session in the window.
  * @param {number} [options.ipLimit=300] - Number of requests allowed per IP in the window.
  * @param {number} [options.windowMs=10000] - Time window in milliseconds.
@@ -50,7 +50,7 @@ export function handleRateLimiting(key, limit, windowMs) {
  */
 export function rateLimit({
     request,
-    nextResponse,
+    response,
     sessionLimit = 30,
     ipLimit = 300,
     windowMs = 10 * 1000
@@ -60,7 +60,7 @@ export function rateLimit({
 
     if (!sessionId) {
         sessionId = uuidv4()
-        nextResponse.cookies.set("session_id", sessionId)
+        response.cookies.set("session_id", sessionId)
     }
 
     // Check IP rate limit
@@ -77,5 +77,5 @@ export function rateLimit({
         })
     }
 
-    return nextResponse
+    return response
 }
