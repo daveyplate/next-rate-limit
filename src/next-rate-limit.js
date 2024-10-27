@@ -5,38 +5,6 @@ import { v4 as uuidv4 } from 'uuid'
 const rateLimitMap = new Map()
 
 /**
- * Function to handle rate limiting.
- * @param {string} key - Key to identify the rate limit.
- * @param {number} limit - Number of requests allowed in the window.
- * @param {number} windowMs - Time window in milliseconds.
- * @returns {boolean} - Indicate if the rate limit is exceeded.
- */
-export function handleRateLimiting(key, limit, windowMs) {
-    const currentTime = Date.now()
-
-    if (!rateLimitMap.has(key)) {
-        rateLimitMap.set(key, [])
-    }
-
-    const timestamps = rateLimitMap.get(key)
-
-    // Filter out timestamps that are outside the current window
-    const validTimestamps = timestamps.filter(timestamp => (currentTime - timestamp) < windowMs)
-
-    // Update the rate limit map with the valid timestamps
-    rateLimitMap.set(key, validTimestamps)
-
-    // Check if limit exceeded
-    if (validTimestamps.length >= limit) {
-        return true
-    }
-
-    // Add the current timestamp to the list
-    validTimestamps.push(currentTime)
-    return false
-}
-
-/**
  * This middleware is used to rate limit requests based
  * on IP address and session ID. Returns NextResponse with 
  * 429 status code if the rate limit is exceeded.
@@ -76,6 +44,36 @@ export function rateLimit({
             status: 429,
         })
     }
+}
 
-    return response
+/**
+ * Function to handle rate limiting.
+ * @param {string} key - Key to identify the rate limit.
+ * @param {number} limit - Number of requests allowed in the window.
+ * @param {number} windowMs - Time window in milliseconds.
+ * @returns {boolean} - Indicate if the rate limit is exceeded.
+ */
+export function handleRateLimiting(key, limit, windowMs) {
+    const currentTime = Date.now()
+
+    if (!rateLimitMap.has(key)) {
+        rateLimitMap.set(key, [])
+    }
+
+    const timestamps = rateLimitMap.get(key)
+
+    // Filter out timestamps that are outside the current window
+    const validTimestamps = timestamps.filter(timestamp => (currentTime - timestamp) < windowMs)
+
+    // Update the rate limit map with the valid timestamps
+    rateLimitMap.set(key, validTimestamps)
+
+    // Check if limit exceeded
+    if (validTimestamps.length >= limit) {
+        return true
+    }
+
+    // Add the current timestamp to the list
+    validTimestamps.push(currentTime)
+    return false
 }
