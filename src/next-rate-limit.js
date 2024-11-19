@@ -33,15 +33,25 @@ export function rateLimit({
 
     // Check IP rate limit
     if (handleRateLimiting(ip, ipLimit, windowMs)) {
-        return new NextResponse("Too Many Requests - IP Limit", {
+        const response = { error: { message: "Too Many Requests" } }
+        console.warn(`Rate limit exceeded for IP: ${ip}`)
+        return new NextResponse(JSON.stringify(response), {
             status: 429,
+            headers: {
+                "Content-Type": "application/json"
+            }
         })
     }
 
     // Check session rate limit
     if (handleRateLimiting(sessionId, sessionLimit, windowMs)) {
-        return new NextResponse("Too Many Requests - Session Limit", {
+        const response = { error: { message: "Too Many Requests" } }
+        console.warn(`Rate limit exceeded for session ID: ${sessionId}`)
+        return new NextResponse(JSON.stringify(response), {
             status: 429,
+            headers: {
+                "Content-Type": "application/json"
+            }
         })
     }
 }
