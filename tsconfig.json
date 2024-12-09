@@ -1,15 +1,25 @@
 {
-    "include": [
-        "src/**/*"
-    ],
     "compilerOptions": {
-        "allowJs": true,
+        "jsx": "react-jsx",
         "declaration": true,
-        "emitDeclarationOnly": true,
-        "outDir": "src/@types",
+        "outDir": "dist",
+        "strict": true,
+        "esModuleInterop": true,
         "skipLibCheck": true,
+        "resolveJsonModule": true,
+        "allowJs": true,
+        "incremental": true,
+        "paths": {
+            "@/*": [
+                "./src/*"
+            ]
+        },
         "lib": [
-            "ES6"
+            "ES6",
+            "DOM"
         ]
-    }
+    },
+    "include": [
+        "src"
+    ]
 }

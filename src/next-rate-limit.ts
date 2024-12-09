@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from 'next/server'
 import { cookies } from 'next/headers'
 import { v4 as uuidv4 } from 'uuid'
 
-const rateLimitMap = new Map()
+const rateLimitMap = new Map<string, number[]>()
 
 /**
  * This middleware is used to rate limit requests based
@@ -22,7 +22,7 @@ export function rateLimit({
     sessionLimit = 30,
     ipLimit = 300,
     windowMs = 10 * 1000
-}) {
+}: { request: NextRequest; response: NextResponse; sessionLimit?: number; ipLimit?: number; windowMs?: number }): NextResponse | null {
     const ip = request.headers.get("x-forwarded-for") || request.ip
     let sessionId = cookies().get('session_id')?.value
 
@@ -32,7 +32,7 @@ export function rateLimit({
     }
 
     // Check IP rate limit
-    if (handleRateLimiting(ip, ipLimit, windowMs)) {
+    if (ip && handleRateLimiting(ip, ipLimit, windowMs)) {
         const response = { error: { message: "Too Many Requests" } }
         console.warn(`Rate limit exceeded for IP: ${ip}`)
         return new NextResponse(JSON.stringify(response), {
@@ -54,23 +54,18 @@ export function rateLimit({
             }
         })
     }
+
+    return null
 }
 
-/**
- * Function to handle rate limiting.
- * @param {string} key - Key to identify the rate limit.
- * @param {number} limit - Number of requests allowed in the window.
- * @param {number} windowMs - Time window in milliseconds.
- * @returns {boolean} - Indicate if the rate limit is exceeded.
- */
-export function handleRateLimiting(key, limit, windowMs) {
+export function handleRateLimiting(key: string, limit: number, windowMs: number) {
     const currentTime = Date.now()
 
     if (!rateLimitMap.has(key)) {
         rateLimitMap.set(key, [])
     }
 
-    const timestamps = rateLimitMap.get(key)
+    const timestamps = rateLimitMap.get(key) || []
 
     // Filter out timestamps that are outside the current window
     const validTimestamps = timestamps.filter(timestamp => (currentTime - timestamp) < windowMs)

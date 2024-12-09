@@ -3,14 +3,16 @@
   "homepage": "https://github.com/Daveyplate/next-rate-limit",
   "version": "1.0.8",
   "description": "NextJS Rate Limiting Middleware",
-  "main": "src/index",
-  "types": "src/@types/index",
+  "module": "dist/index",
+  "types": "dist/index",
   "files": [
-    "src"
+    "src",
+    "dist"
   ],
   "scripts": {
-    "build": "npx tsc",
-    "prepublishOnly": "npm run build"
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "prepublishOnly": "rm -rf dist && npm run build"
   },
   "keywords": [
     "NextJS",
@@ -18,7 +20,7 @@
     "Rate Limiting",
     "Middleware"
   ],
-  "author": "LeakedDave",
+  "author": "daveycodez",
   "license": "ISC",
   "devDependencies": {
     "@types/uuid": "^10.0.0",
