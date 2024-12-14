@@ -1,7 +1,7 @@
 {
   "name": "@daveyplate/next-rate-limit",
   "homepage": "https://github.com/Daveyplate/next-rate-limit",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "NextJS Rate Limiting Middleware",
   "module": "dist/index",
   "types": "dist/index",
