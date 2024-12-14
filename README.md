@@ -10,14 +10,14 @@ npm install @daveyplate/next-rate-limit
 
 # Usage
 
-Default limits are 20 requests per session within 10 seconds, and 100 requests per IP within 10 seconds.
+Default limits are 30 requests per session within 10 seconds, and 120 requests per IP within 10 seconds.
 
 ```ts
 export function rateLimit({ 
     request, 
     response, 
-    sessionLimit = 20, 
-    ipLimit = 100, 
+    sessionLimit = 30, 
+    ipLimit = 120, 
     sessionWindow = 10, 
     ipWindow = 10, 
     upstash = { 

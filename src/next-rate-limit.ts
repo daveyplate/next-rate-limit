@@ -68,8 +68,8 @@ interface RateLimitOptions {
  * @param {RateLimitOptions} options - Rate limiting options.
  * @param {NextRequest} options.request - NextRequest object.
  * @param {NextResponse} options.response - NextResponse object.
- * @param {number} [options.sessionLimit=20] - Number of requests allowed per session in the window.
- * @param {number} [options.ipLimit=100] - Number of requests allowed per IP in the window.
+ * @param {number} [options.sessionLimit=30] - Number of requests allowed per session in the window.
+ * @param {number} [options.ipLimit=120] - Number of requests allowed per IP in the window.
  * @param {number} [options.sessionWindow=10] - Window in seconds for session rate limiting.
  * @param {number} [options.ipWindow=10] - Window in seconds for IP rate limiting.
  * @param {object} [options.upstash] - Upstash Redis configuration.
@@ -81,8 +81,8 @@ interface RateLimitOptions {
 export async function rateLimit({
     request,
     response,
-    sessionLimit = 20,
-    ipLimit = 100,
+    sessionLimit = 30,
+    ipLimit = 120,
     sessionWindow = 10,
     ipWindow = 10,
     upstash = {},
