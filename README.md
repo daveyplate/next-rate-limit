@@ -1,6 +1,6 @@
 # NextJS Rate Limiting Middleware
 
-Uses in-memory rate limiting for both session & IP. Doesn't require Redis, simple easy setup, and super basic protection from abuse.
+Uses in-memory rate limiting for both session & IP. Simple easy setup, and super basic protection from abuse. Now supports Upstash configuration for distributed rate limiting.
 
 # Installation
 
@@ -10,15 +10,22 @@ npm install @daveyplate/next-rate-limit
 
 # Usage
 
-Default limits are 30 requests per session within 15 seconds, and 300 requests per IP within 15 seconds (10 users)
+Default limits are 20 requests per session within 10 seconds, and 100 requests per IP within 10 seconds.
 
-```jsx
+```ts
 export function rateLimit({ 
     request, 
     response, 
-    sessionLimit = 30, 
-    ipLimit = 300, 
-    windowMs = 15 * 1000 
+    sessionLimit = 20, 
+    ipLimit = 100, 
+    sessionWindow = 10, 
+    ipWindow = 10, 
+    upstash = { 
+        enabled: false, 
+        url: process.env.UPSTASH_REDIS_REST_URL, 
+        token: '', 
+        analytics: false
+    } 
 })
 ```
 
@@ -31,14 +38,41 @@ import { rateLimit } from '@daveyplate/next-rate-limit'
 export async function middleware(request: NextRequest) {
     const response = NextResponse.next()
 
-    const rateLimitResponse = await rateLimit({ request, response })
-    if (rateLimitResponse) return rateLimitResponse
-
-    return response
+    return await rateLimit({ request, response })
 }
 
 // Apply middleware to all API routes
 export const config = {
     matcher: '/api/:path*'
 }
+```
+
+# Upstash Configuration
+
+To enable Upstash, you can configure it using environment variables or by passing the configuration directly.
+
+## Environment Variables
+
+Set the following environment variables in your `.env` file:
+
+```
+UPSTASH_REDIS_REST_URL=<your_upstash_redis_rest_url>
+UPSTASH_REDIS_REST_TOKEN=<your_upstash_redis_rest_token>
+```
+
+## Passing Configuration Directly
+
+You can also pass the Upstash configuration directly when calling `rateLimit`:
+
+```tsx
+const rateLimitResponse = await rateLimit({ 
+    request, 
+    response, 
+    upstash: {
+        enabled: true,
+        url: '<your_upstash_redis_rest_url>',
+        token: '<your_upstash_redis_rest_token>',
+        analytics: true
+    }
+})
 ```

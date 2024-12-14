@@ -1,7 +1,7 @@
 {
   "name": "@daveyplate/next-rate-limit",
   "homepage": "https://github.com/Daveyplate/next-rate-limit",
-  "version": "1.0.10",
+  "version": "2.0.0",
   "description": "NextJS Rate Limiting Middleware",
   "module": "dist/index",
   "types": "dist/index",
@@ -24,11 +24,12 @@
   "license": "ISC",
   "devDependencies": {
     "@types/uuid": "^10.0.0",
-    "typescript": "^5.6.2",
-    "next": "file:../daveyplate/node_modules/next"
+    "next": "file:../daveyplate/node_modules/next",
+    "typescript": "^5.6.2"
   },
   "peerDependencies": {
     "next": ">=14.0.0",
-    "uuid": ">=10.0.0"
+    "uuid": ">=10.0.0",
+    "@upstash/ratelimit": ">=2.0.5"
   }
 }
