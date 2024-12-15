@@ -23,13 +23,20 @@
   "author": "daveycodez",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^22.10.2",
     "@types/uuid": "^10.0.0",
     "next": "file:../daveyplate/node_modules/next",
     "typescript": "^5.6.2"
   },
   "peerDependencies": {
+    "@upstash/ratelimit": ">=2.0.5",
     "next": ">=14.0.0",
-    "uuid": ">=10.0.0",
-    "@upstash/ratelimit": ">=2.0.5"
+    "uuid": ">=10.0.0"
+  },
+  "dependencies": {
+    "express-rate-limit": "^7.4.1",
+    "install": "^0.13.0",
+    "lru-cache": "^11.0.2",
+    "npm": "^10.9.2"
   }
 }
